@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:helloworld:Magento_Widget:etc/widget.xsd">
+    <widget class="Absolute\AdvancedSlider\Block\Slider" id="absolute_advancedslider_slider"  placeholder_image="Magento_Cms::images/widget_block.png">
+        <label>Absolute Slider</label>
+        <description></description>
+         <parameters>
+            <parameter name="slider_alias" xsi:type="select" visible="true" source_model="Absolute\AdvancedSlider\Model\Config\Source\SlidersList">
+                <label translate="true">Slider Alias</label>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>

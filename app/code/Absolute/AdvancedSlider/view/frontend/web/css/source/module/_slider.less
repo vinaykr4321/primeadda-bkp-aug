@@ -1,0 +1,201 @@
+//
+//  Variables
+//  _____________________________________________
+
+    // Defaults can be easily changed below
+
+    // Slider
+    @aslider__background-colour: transparent; 
+    @aslider__background-margin: 0 0 20px 0;
+
+    // Caption
+    @aslider-caption__background-colour: rgba(255, 255, 255, 0.4);
+    @aslider-caption__padding: 20px;
+    @aslider-caption__colour: black;
+
+    // Applies to full width position
+    @aslider-caption-full__size: 50%;
+
+    // Applies to left / right position slides when viewing over @screen__l (default likely 992px)
+    @aslider-caption__size: 50%;
+    @aslider-image__size: 100% - @aslider-caption__size; // (LESS will calculate this before compiling CSS)
+
+    // Navigation
+    @aslider-nav__color: black;
+    @aslider-nav__border-color:rgba(0,0,0,0.1);
+    @aslider-nav__active__color: black;
+    @aslider-nav__active__border-color: black;
+ 
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .c-aslider {
+        background-color: @aslider__background-colour;
+        margin: @aslider__background-margin;
+        overflow: hidden;
+        
+        &__slides {
+            height: 0;
+            visibility: hidden;
+        }
+
+        &__loading {
+            height: auto;
+            visibility: visible;
+        }
+
+        &__link {
+            color: @aslider-caption__colour;
+        }
+
+        &__item {
+            position: relative; 
+
+            &--full {
+                .c-aslider__image {
+                    width: 100%;
+                }
+            }
+        }
+ 
+        &__caption {
+            background-color: @aslider-caption__background-colour;
+            color: @aslider-caption__colour;
+            padding: @aslider-caption__padding;
+        }
+               
+        &__picture {
+            display: block;
+            margin: 0 auto;
+        }
+
+        &__image {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .slick-arrow {
+            width: 40px;
+            height: 40px;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            background: url('../images/angle-left.svg') no-repeat center center;
+
+            &.slick-next {
+                background: url('../images/angle-right.svg') no-repeat center center;
+            }
+
+            &:before {
+                content: '';
+            }
+        }
+
+        // Navigation
+        &__nav {
+            display: none;
+            opacity: 0;
+            transition: all .5s ease-in;
+            visibility: hidden;    
+
+            // Make sure desired styles are not overridden by Slick slider
+            &.slick-slider {
+                display: none;
+            }
+
+            .slick-slide {
+                padding:0px 10px;
+                box-sizing:border-box;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__s) {
+
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+}
+
+//
+//  Large Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+    .c-aslider {
+        &__item {
+            &--full {
+                .c-aslider__caption {
+                    left: 50%;
+                    position: absolute;
+                    transform: translate(-50%, -50%);
+                    top: 50%;
+                    width: @aslider-caption-full__size;
+                }
+            }
+
+            &--left {
+                display: flex;
+            }
+
+            &--right {
+                display: flex; 
+                flex-direction: row-reverse;
+            }
+
+            &--left,
+            &--right {
+                .c-aslider__caption {
+                    width: @aslider-caption__size;
+                }
+
+                .c-aslider__picture {
+                    width: @aslider-image__size;
+                }
+            }
+        }
+
+        &__nav {
+            display: block; 
+
+            // Make sure desired styles are not overridden by Slick slider
+            &.slick-slider {
+                display: block;
+            }
+        }
+    
+        &__nav-item {
+            border-bottom: 2px solid @aslider-nav__border-color;
+            border-right: 1px solid white;
+            color: @aslider-nav__color;
+            cursor: pointer; 
+            padding: 10px;
+            text-align: center;
+            box-sizing: border-box;
+
+            .slick-current & {
+                border-bottom: 2px solid @aslider-nav__active__border-color;
+                color: @aslider-nav__active__color;
+            }
+        }
+
+        &:hover {
+            .slick-arrow {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+    } 
+}

@@ -1,0 +1,108 @@
+<?php
+/*
+ * @author Absolute Design
+ * @copyright Copyright (c) 2018 Absolute Design (https://www.absolute-design.co.uk)
+ * @package Absolute_AdvancedSlider
+ */
+/** @var Absolute\AdvancedSlider\Block\Slider $block */
+?>
+<?php if ($slider = $block->getSlider()) : ?>
+
+    <!-- Slider -->
+    <?php $slides = $slider->getSlides(); ?>
+
+    <?php if ($slides) : ?>
+        <?php
+            /*
+                First slide
+                This will be shown before JS is instantiated to stop FOUC
+
+                Overall slider
+                This will be shown once the JS has instantiated
+            */
+        ?>
+
+        <?php $first = $slides->getFirstItem(); ?>
+
+        <div class="c-aslider c-aslider--theme-full-hero" id="aslider-<?= $block->escapeCss($slider->getSliderId()); ?>">
+            <!-- First slide -->
+            <?php if ($first) : ?>
+                <div class="c-aslider__loading">
+                    <?php if ($first->getLink()) : ?><a class="c-aslider__link" href="<?= $block->escapeUrl($first->getLink()); ?>"><?php endif; ?>
+                        <div class="c-aslider__item c-aslider__item--<?= $block->escapeCss($first->getImagePosition()); ?>" <?php if ($first->getColour()) { echo 'style="background-color: ' . $block->escapeCss($first->getColour()) . ';"'; } ?>>
+                            <picture class="c-aslider__picture">
+                                <?php if ($first->getMobileImage()) : ?>
+                                    <source srcset="<?= $block->escapeUrl($block->getImageUrl($first->getImage())); ?>, <?= $block->escapeUrl($block->getRetinaImageUrl($first->getImage())); ?> 2x"
+                                        media="(min-width: 768px)">
+                                    <img class="c-aslider__image"
+                                        srcset="<?= $block->escapeUrl($block->getMobileImageUrl($first->getMobileImage())); ?>, <?= $block->escapeUrl($block->getMobileRetinaImageUrl($first->getMobileImage())); ?> 2x"
+                                        alt="<?= $block->escapeHtmlAttr($first->getTitle()); ?>">
+                                <?php else : ?>
+                                    <img class="c-aslider__image"
+                                         srcset="<?= $block->escapeUrl($block->getImageUrl($first->getImage())); ?>, <?= $block->escapeUrl($block->getRetinaImageUrl($first->getImage())); ?> 2x"
+                                         alt="<?= $block->escapeHtmlAttr($first->getTitle()); ?>">
+                                <?php endif; ?>
+                            </picture>
+
+                            <?php if ($first->getContent()) : ?>
+                                <div class="c-aslider__caption" <?php if ($first->getContentColour()) { echo 'style="background-color: ' . $block->escapeCss($first->getContentColour()) . ';"'; } ?>>
+                                    <?= /* @noEscape */ $first->getContent(); ?>
+                                </div><!-- C ASlider Caption ends -->
+                            <?php endif; ?>
+                        </div><!-- C ASlider Item ends -->
+                    <?php if ($first->getLink()): ?></a><?php endif; ?>
+                </div><!-- C ASlider Loading ends -->
+            <?php endif; ?>
+
+            <!-- Overall slider -->
+            <div class="c-aslider__slides c-aslider--theme-full-hero">
+                <?php foreach($slides as $slide) : ?>
+                    <?php if ($slide->getLink()) : ?><a class="c-aslider__link" href="<?= $block->escapeUrl($slide->getLink()); ?>"><?php endif; ?>
+                        <div class="c-aslider__slide">
+                            <div class="c-aslider__item c-aslider__item--<?= $block->escapeCss($slide->getImagePosition()); ?>" <?php if ($slide->getBackgroundColour()) { echo 'style="background-color: ' . $block->escapeCss($slide->getBackgroundColour()) . ';"'; } ?>>
+                                <picture class="c-aslider__picture">
+                                    <?php if ($slide->getMobileImage()) : ?>
+                                        <source srcset="<?= $block->escapeUrl($block->getImageUrl($slide->getImage())); ?>, <?= $block->escapeUrl($block->getRetinaImageUrl($slide->getImage())); ?> 2x"
+                                            media="(min-width: 768px)">
+                                        <img class="c-aslider__image"
+                                            srcset="<?= $block->escapeUrl($block->getMobileImageUrl($slide->getMobileImage())); ?>, <?= $block->escapeUrl($block->getMobileRetinaImageUrl($slide->getMobileImage())); ?> 2x"
+                                            alt="<?= $block->escapeHtmlAttr($slide->getTitle()); ?>">
+                                    <?php else : ?>
+                                        <img class="c-aslider__image"
+                                            srcset="<?= $block->escapeUrl($block->getImageUrl($slide->getImage())); ?>, <?= $block->escapeUrl($block->getRetinaImageUrl($slide->getImage())); ?> 2x"
+                                            alt="<?= $block->escapeHtmlAttr($slide->getTitle()); ?>">
+                                    <?php endif; ?>
+                                </picture>
+
+                                <?php if ($slide->getContent()) : ?>
+                                    <div class="c-aslider__caption" <?php if ($slide->getContentColour()) { echo 'style="background-color: ' . $block->escapeCss($slide->getContentColour()) . ';"'; } ?>>
+                                        <?= /* @noEscape */ $slide->getContent(); ?>
+                                    </div><!-- C ASlider Caption ends -->
+                                <?php endif; ?>
+                            </div><!-- C ASlider Item ends -->
+                        </div><!-- C ASlider Slide ends -->
+                    <?php if ($slide->getLink()): ?></a><?php endif; ?>
+                <?php endforeach; ?>
+            </div><!-- C ASlider Slides ends -->
+
+            <!-- Navigation -->
+            <?php if ($slider->getPaginationCount() && $slider->getPagination()) : ?>
+                <div class="c-aslider__nav">
+                    <?php foreach($slides as $slide): ?>
+                        <div class="c-aslider__nav-item"><?= /* @noEscape */ $slide->getPaginationContent(); ?></div>
+                    <?php endforeach; ?>
+                </div><!-- C ASlider Nav ends -->
+            <?php endif; ?>
+        </div><!-- C ASlider ends -->
+
+        <script type="text/x-magento-init">
+            {
+                "#aslider-<?= $block->escapeJs($slider->getSliderId()); ?>": {
+                    "Absolute_AdvancedSlider/js/slider": {
+                        "config": <?= /* @noEscape */ $slider->getJSONConfiguration(); ?>
+                    }
+                }
+            }
+        </script>
+    <?php endif; ?>
+<?php endif; ?>

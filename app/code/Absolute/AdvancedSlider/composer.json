@@ -1,0 +1,35 @@
+{
+  "name": "absolute_design/absolute-slider",
+  "description": "Magento 2 Slider",
+  "type": "magento2-module",
+  "version": "2.0.2",
+  "homepage": "https://www.absolute-design.co.uk",
+  "keywords": [
+    "magento",
+    "magento2",
+    "magento 2",
+    "plugin",
+    "module",
+    "slider"
+  ],
+  "license": [
+    "MIT"
+  ],
+  "require": {
+    "php": "~7.0|~7.1|~7.2",
+    "magento/framework": ">101.0",
+    "magento/module-config": ">100.0",
+    "magento/module-store": ">100.0",
+    "magento/module-theme": ">100.0",
+    "magento/module-directory": ">100.0",
+    "magento/module-media-storage": ">100.0"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Absolute\\AdvancedSlider\\": ""
+    }
+  }
+}
